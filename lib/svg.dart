@@ -236,6 +236,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   }) : super(key: key);
 
   /// Instantiates a widget that renders an SVG picture from an [AssetBundle].
@@ -337,6 +338,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   })  : pictureProvider = ExactAssetPicture(
           allowDrawingOutsideViewBox == true
               ? svgStringDecoderOutsideViewBoxBuilder
@@ -401,6 +403,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   })  : pictureProvider = NetworkPicture(
           allowDrawingOutsideViewBox == true
               ? svgByteDecoderOutsideViewBoxBuilder
@@ -461,6 +464,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   })  : pictureProvider = FilePicture(
           allowDrawingOutsideViewBox == true
               ? svgByteDecoderOutsideViewBoxBuilder
@@ -517,6 +521,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   })  : pictureProvider = MemoryPicture(
           allowDrawingOutsideViewBox == true
               ? svgByteDecoderOutsideViewBoxBuilder
@@ -573,6 +578,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
+    this.crossFadeDuration = const Duration(milliseconds: 300),
   })  : pictureProvider = StringPicture(
           allowDrawingOutsideViewBox == true
               ? svgStringDecoderOutsideViewBoxBuilder
@@ -728,6 +734,9 @@ class SvgPicture extends StatefulWidget {
   /// The default color applied to SVG elements that inherit the color property.
   /// See: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#currentcolor_keyword
   final Color? currentColor;
+
+  /// Duration of the cross-fade animation.
+  final Duration crossFadeDuration;
 
   @override
   State<SvgPicture> createState() => _SvgPictureState();
