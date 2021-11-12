@@ -893,8 +893,8 @@ class _SvgPictureState extends State<SvgPicture> {
     } else {
       secondChild = _getDefaultPlaceholder(context, widget.width, widget.height);
     }
-    _maybeWrapWithSemantics(firstChild);
-    _maybeWrapWithSemantics(secondChild);
+    firstChild = _maybeWrapWithSemantics(firstChild);
+    secondChild = _maybeWrapWithSemantics(secondChild);
 
     return AnimatedCrossFade(
       duration: widget.crossFadeDuration,
