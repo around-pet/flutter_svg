@@ -403,7 +403,7 @@ class SvgPicture extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.currentColor,
-    this.crossFadeDuration = const Duration(milliseconds: 300),
+    this.crossFadeDuration = const Duration(milliseconds: 30000),
   })  : pictureProvider = NetworkPicture(
           allowDrawingOutsideViewBox == true
               ? svgByteDecoderOutsideViewBoxBuilder
