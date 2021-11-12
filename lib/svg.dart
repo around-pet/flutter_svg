@@ -901,7 +901,7 @@ class _SvgPictureState extends State<SvgPicture> {
       firstCurve: Curves.easeOut,
       secondCurve: Curves.easeIn,
       firstChild: firstChild,
-      secondChild: _getDefaultPlaceholder(context, widget.width, widget.height),
+      secondChild: secondChild,
       crossFadeState: _picture == null ? CrossFadeState.showFirst : CrossFadeState.showSecond,
     );
   }
