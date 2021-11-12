@@ -896,6 +896,7 @@ class _SvgPictureState extends State<SvgPicture> {
     _maybeWrapWithSemantics(firstChild);
     _maybeWrapWithSemantics(secondChild);
 
+    print('PICTURE: ${_picture}');
     return AnimatedCrossFade(
       duration: widget.crossFadeDuration,
       firstCurve: Curves.easeOut,
