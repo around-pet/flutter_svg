@@ -825,6 +825,18 @@ class _SvgPictureState extends State<SvgPicture> {
     _isListeningToStream = false;
   }
 
+  Widget _maybeWrapWithSemantics(Widget child) {
+    if (widget.excludeFromSemantics) {
+      return child;
+    }
+    return Semantics(
+      container: widget.semanticsLabel != null,
+      image: true,
+      label: widget.semanticsLabel == null ? '' : widget.semanticsLabel,
+      child: child,
+    );
+  }
+
   @override
   void dispose() {
     assert(_pictureStream != null);
@@ -834,7 +846,11 @@ class _SvgPictureState extends State<SvgPicture> {
 
   @override
   Widget build(BuildContext context) {
-    late Widget child;
+    Widget firstChild = widget.placeholderBuilder == null
+        ? _getDefaultPlaceholder(context, widget.width, widget.height)
+        : widget.placeholderBuilder!(context);
+    late Widget secondChild;
+
     if (_picture != null) {
       final Rect viewport = Offset.zero & _picture!.viewport.size;
 
@@ -849,7 +865,7 @@ class _SvgPictureState extends State<SvgPicture> {
         height = width / viewport.width * viewport.height;
       }
 
-      child = SizedBox(
+      secondChild = SizedBox(
         width: width,
         height: height,
         child: FittedBox(
@@ -869,25 +885,25 @@ class _SvgPictureState extends State<SvgPicture> {
 
       if (widget.pictureProvider.colorFilter == null &&
           widget.colorFilter != null) {
-        child = ColorFiltered(
+        secondChild = ColorFiltered(
           colorFilter: widget.colorFilter!,
-          child: child,
+          child: secondChild,
         );
       }
     } else {
-      child = widget.placeholderBuilder == null
-          ? _getDefaultPlaceholder(context, widget.width, widget.height)
-          : widget.placeholderBuilder!(context);
+      secondChild = _getDefaultPlaceholder(context, widget.width, widget.height);
     }
-    if (!widget.excludeFromSemantics) {
-      child = Semantics(
-        container: widget.semanticsLabel != null,
-        image: true,
-        label: widget.semanticsLabel == null ? '' : widget.semanticsLabel,
-        child: child,
-      );
-    }
-    return child;
+    _maybeWrapWithSemantics(firstChild);
+    _maybeWrapWithSemantics(secondChild);
+
+    return AnimatedCrossFade(
+      duration: widget.crossFadeDuration,
+      firstCurve: Curves.easeOut,
+      secondCurve: Curves.easeIn,
+      firstChild: firstChild,
+      secondChild: secondChild,
+      crossFadeState: _picture == null ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+    );
   }
 
   Widget _getDefaultPlaceholder(
