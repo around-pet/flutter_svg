@@ -897,6 +897,26 @@ class _SvgPictureState extends State<SvgPicture> {
     secondChild = _maybeWrapWithSemantics(secondChild);
 
     return AnimatedCrossFade(
+      layoutBuilder: (Widget topChild, Key topChildKey, Widget bottomChild,
+          Key bottomChildKey) {
+        return Stack(
+          fit: StackFit.passthrough,
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Positioned(
+              key: bottomChildKey,
+              left: 0.0,
+              top: 0.0,
+              right: 0.0,
+              child: bottomChild,
+            ),
+            Positioned(
+              key: topChildKey,
+              child: topChild,
+            ),
+          ],
+        );
+      },
       duration: widget.crossFadeDuration,
       firstCurve: Curves.easeOut,
       secondCurve: Curves.easeIn,
